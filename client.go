@@ -76,8 +76,24 @@ type Client struct {
 	}, nil
 }
 
-// SendEmail sends an email via the Mailnow API
-func (c *Client) SendEmail(ctx context.Context, req *EmailRequest) (*EmailResponse, error) {
+// SendEmail sends an email via the Mailnow API.
+//
+// The method validates the email request, sends it to the Mailnow API,
+// and returns the response containing the message ID and status.
+//
+// Parameters:
+//   - ctx: Context for request cancellation and timeout control
+//   - req: EmailRequest containing from, to, subject, and HTML body
+//
+// Returns:
+//   - EmailResponse: contains success status, message ID, and delivery status
+//   - error: nil on success, or one of the following error types on failure
+//
+// Errors:
+//   - ValidationError: returned when request parameters are invalid (empty fields, malformed emails)
+//   - AuthError: returned when the API key is invalid or unauthorized (HTTP 401)
+//   - RateLimitError: returned when rate limits are exceeded (HTTP 429)
+//   - ServerError: retur
 	// Validate email request
 	if err := ValidateEmailRequest(req); err != nil {
 		return nil, err

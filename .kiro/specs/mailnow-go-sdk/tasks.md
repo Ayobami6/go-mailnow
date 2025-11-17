@@ -159,7 +159,10 @@
   - Return appropriate error types on failure
   - _Requirements: 2.1, 2.2, 3.1, 3.2, 3.3, 5.1, 5.2, 5.3, 5.4, 5.5, 9.1, 9.2_
 
-- [ ]* 8.1 Write unit tests for SendEmail method
+- [-] 8.1 Write unit tests for SendEmail method
+
+
+
   - Test SendEmail() with invalid request parameters (should return ValidationError)
   - Test SendEmail() with successful API response (should return EmailResponse)
   - Test SendEmail() with authentication error (should return AuthError)
