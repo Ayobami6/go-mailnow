@@ -404,7 +404,9 @@ Represents a successful email sending response.
 
 ## Testing
 
-Run the test suite:
+### Unit Tests
+
+Run the unit test suite:
 
 ```bash
 go test ./...
@@ -421,6 +423,49 @@ Run tests with verbose output:
 ```bash
 go test -v ./...
 ```
+
+### Integration Tests
+
+Integration tests verify the SDK's behavior against the actual Mailnow API. These tests require a valid test API key and are disabled by default.
+
+#### Running Integration Tests
+
+1. **Get a test API key**: Obtain a test API key from the [Mailnow Dashboard](https://mailnow.xyz/dashboard). Test keys have the format `mn_test_*`.
+
+2. **Set the environment variable**:
+   ```bash
+   export MAILNOW_TEST_API_KEY="mn_test_your_test_api_key_here"
+   ```
+
+3. **Run integration tests**:
+   ```bash
+   go test -tags=integration -v
+   ```
+
+#### Integration Test Coverage
+
+The integration tests cover:
+
+- **Successful email sending** with valid API key and parameters
+- **Authentication failures** with invalid API keys
+- **Validation errors** with invalid email parameters (empty fields, malformed emails)
+- **Context timeout handling** with short timeouts
+- **Context cancellation** handling
+
+#### Example Integration Test Run
+
+```bash
+# Set your test API key
+export MAILNOW_TEST_API_KEY="mn_test_abc123def456"
+
+# Run integration tests with verbose output
+go test -tags=integration -v
+
+# Run specific integration test
+go test -tags=integration -v -run TestIntegrationSuccessfulEmailSend
+```
+
+**Note**: Integration tests will make actual API calls to the Mailnow service. While test API keys don't send real emails, they do count against your API usage quotas.
 
 ## Contributing
 
