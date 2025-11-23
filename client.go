@@ -57,7 +57,7 @@ type Client struct {
 // Example:
 //
 //	client, err := mailnow.NewClient("mn_live_7e59df7ce4a14545b443837804ec9722")
-//	
+func NewClient(apiKey string) (*Client, error) {
 	// Validate API key
 	if err := ValidateAPIKey(apiKey); err != nil {
 		return nil, err
@@ -93,7 +93,8 @@ type Client struct {
 //   - ValidationError: returned when request parameters are invalid (empty fields, malformed emails)
 //   - AuthError: returned when the API key is invalid or unauthorized (HTTP 401)
 //   - RateLimitError: returned when rate limits are exceeded (HTTP 429)
-//   - ServerError: retur
+//   - ServerError: returned when the API encounters an internal error (HTTP 5xx)
+func (c *Client) SendEmail(ctx context.Context, req *EmailRequest) (*EmailResponse, error) {
 	// Validate email request
 	if err := ValidateEmailRequest(req); err != nil {
 		return nil, err

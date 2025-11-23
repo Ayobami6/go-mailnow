@@ -163,6 +163,9 @@
 
 
 
+
+
+
   - Test SendEmail() with invalid request parameters (should return ValidationError)
   - Test SendEmail() with successful API response (should return EmailResponse)
   - Test SendEmail() with authentication error (should return AuthError)
