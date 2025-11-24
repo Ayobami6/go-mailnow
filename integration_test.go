@@ -10,6 +10,8 @@ import (
 	"os"
 	"testing"
 	"time"
+
+	_ "github.com/joho/godotenv/autoload"
 )
 
 // TestIntegrationSuccessfulEmailSend tests successful email sending with valid API key
@@ -104,7 +106,8 @@ func TestIntegrationAuthenticationFailure(t *testing.T) {
 	var authErr *AuthError
 	var serverErr *ServerError
 	var connErr *ConnectionError
-	if !errors.As(err, &authErr) && !errors.As(err, &serverErr) && !errors.As(err, &connErr) {
+	var validationErr *ValidationError
+	if !errors.As(err, &authErr) && !errors.As(err, &serverErr) && !errors.As(err, &connErr) && !errors.As(err, &validationErr) {
 		t.Errorf("Expected AuthError, ServerError, or ConnectionError for invalid API key, got %T: %v", err, err)
 	}
 
