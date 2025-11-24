@@ -6,6 +6,7 @@ package mailnow
 import (
 	"context"
 	"errors"
+	"log"
 	"os"
 	"testing"
 	"time"
@@ -18,6 +19,7 @@ func TestIntegrationSuccessfulEmailSend(t *testing.T) {
 	if apiKey == "" {
 		t.Skip("MAILNOW_TEST_API_KEY environment variable not set, skipping integration test")
 	}
+	log.Println("Using API Key:", apiKey)
 
 	// Create client with test API key
 	client, err := NewClient(apiKey)
@@ -31,8 +33,8 @@ func TestIntegrationSuccessfulEmailSend(t *testing.T) {
 
 	// Prepare valid email request
 	req := &EmailRequest{
-		From:    "test@example.com",
-		To:      "recipient@example.com",
+		From:    "ayobamidele006@gmail.com",
+		To:      "ayobamidele006@gmail.com",
 		Subject: "Integration Test Email",
 		HTML:    "<h1>Integration Test</h1><p>This is a test email sent from the Go SDK integration tests.</p>",
 	}
@@ -51,22 +53,24 @@ func TestIntegrationSuccessfulEmailSend(t *testing.T) {
 	if !resp.Success {
 		t.Errorf("Expected success=true, got %v", resp.Success)
 	}
+	log.Println("Response:", resp)
 
-	if resp.MessageID == "" {
+	if resp.Data.MessageID == "" {
 		t.Error("Expected non-empty message ID")
 	}
 
-	if resp.Status == "" {
+	if resp.Data.Status == "" {
 		t.Error("Expected non-empty status")
 	}
 
-	t.Logf("Email sent successfully: MessageID=%s, Status=%s", resp.MessageID, resp.Status)
+	t.Logf("Email sent successfully: MessageID=%s, Status=%s", resp.Data.MessageID, resp.Data.Status)
 }
 
 // TestIntegrationAuthenticationFailure tests authentication failure with invalid API key
 func TestIntegrationAuthenticationFailure(t *testing.T) {
 	// Use an invalid API key (valid format but non-existent)
 	invalidAPIKey := "mn_test_invalid_key_12345678901234567890"
+	// invalidAPIKey := "mn_live_40a9c9353dee4ab5b112573b7e65e1e9"
 
 	// Create client with invalid API key
 	client, err := NewClient(invalidAPIKey)
@@ -80,10 +84,11 @@ func TestIntegrationAuthenticationFailure(t *testing.T) {
 
 	// Prepare valid email request
 	req := &EmailRequest{
-		From:    "test@example.com",
-		To:      "recipient@example.com",
-		Subject: "Test Email",
-		HTML:    "<h1>Test</h1><p>This should fail due to invalid API key.</p>",
+		From:        "test@example.com",
+		To:          "recipient@example.com",
+		Subject:     "Test Email",
+		HTML:        "<h1>Test</h1><p>This should fail due to invalid API key.</p>",
+		Attachments: nil,
 	}
 
 	// Send email - should fail with authentication error

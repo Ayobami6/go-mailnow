@@ -166,9 +166,11 @@ func TestHandleResponse(t *testing.T) {
 			name:       "successful response 200",
 			statusCode: http.StatusOK,
 			body: mailnow.EmailResponse{
-				Success:   true,
-				MessageID: "msg_123",
-				Status:    "sent",
+				Success: true,
+				Data: mailnow.Data{
+					MessageID: "msg_123",
+					Status:    "sent",
+				},
 			},
 			wantErr: false,
 		},
@@ -176,9 +178,11 @@ func TestHandleResponse(t *testing.T) {
 			name:       "successful response 201",
 			statusCode: http.StatusCreated,
 			body: mailnow.EmailResponse{
-				Success:   true,
-				MessageID: "msg_456",
-				Status:    "queued",
+				Success: true,
+				Data: mailnow.Data{
+					MessageID: "msg_123",
+					Status:    "queued",
+				},
 			},
 			wantErr: false,
 		},

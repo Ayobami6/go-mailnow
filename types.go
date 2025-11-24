@@ -17,7 +17,12 @@ type Attachment struct {
 
 // EmailResponse represents a successful email sending response
 type EmailResponse struct {
-	Success   bool   `json:"success"`
+	Data       Data   `json:"data"`
+	Message    string `json:"message"`
+	StatusCode int    `json:"status_code"`
+	Success    bool   `json:"success"`
+}
+type Data struct {
 	MessageID string `json:"message_id"`
 	Status    string `json:"status"`
 }

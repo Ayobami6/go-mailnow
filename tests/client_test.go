@@ -418,7 +418,7 @@ func TestSendEmailHTTPIntegration(t *testing.T) {
 					t.Errorf("expected success=true, got %v", emailResp.Success)
 				}
 
-				if emailResp.MessageID == "" {
+				if emailResp.Data.MessageID == "" {
 					t.Errorf("expected non-empty message ID")
 				}
 			}
