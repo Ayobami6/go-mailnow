@@ -4,7 +4,7 @@ import "time"
 
 const (
 	// APIBaseURL is the base URL for the Mailnow API
-	APIBaseURL = "https://api.mailnow.xyz"
+	APIBaseURL = "https://api.mailnow.dev"
 
 	// APIVersion is the API version
 	APIVersion = "v1"
